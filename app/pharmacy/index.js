@@ -448,6 +448,654 @@ const LiveHealthyFooter = React.memo(() => {
 });
 
 // ============================================================================
+// PAGE 2: MEDICINES BY CATEGORY - Comprehensive Medicine Categories
+// ============================================================================
+
+const MEDICINE_CATEGORIES = [
+  { id: '1', name: 'Pain Relief', icon: '💊', products: 250, desc: 'Analgesics, NSAIDs, muscle relaxants' },
+  { id: '2', name: 'Diabetes Care', icon: '💉', products: 180, desc: 'Insulin, metformin, glucose monitors' },
+  { id: '3', name: 'Heart Care', icon: '❤️', products: 220, desc: 'BP medicines, cholesterol, cardiac care' },
+  { id: '4', name: 'Digestion', icon: '🫃', products: 190, desc: 'Antacids, probiotics, digestive enzymes' },
+  { id: '5', name: 'Antibiotics', icon: '🦠', products: 150, desc: 'Bacterial infection medicines' },
+  { id: '6', name: 'Skin Care', icon: '✨', products: 300, desc: 'Creams, ointments, gels' },
+  { id: '7', name: 'Vitamins', icon: '💊', products: 400, desc: 'Multivitamins, supplements' },
+  { id: '8', name: 'Cold & Cough', icon: '😷', products: 170, desc: 'Cough syrups, tablets, sprays' },
+  { id: '9', name: 'Eye Care', icon: '👁️', products: 120, desc: 'Eye drops, lubricants' },
+  { id: '10', name: 'Dental Care', icon: '🦷', products: 140, desc: 'Toothpaste, mouthwash' },
+  { id: '11', name: 'Weight Loss', icon: '⚖️', products: 90, desc: 'Fat burners, slimming products' },
+  { id: '12', name: 'Mental Health', icon: '🧠', products: 110, desc: 'Anxiety, depression medicines' },
+];
+
+const MedicineCategoriesSection = React.memo(() => (
+  <View style={medCatStyles.container}>
+    <View style={medCatStyles.headerRow}>
+      <Text style={medCatStyles.sectionTitle}>Medicines by Category</Text>
+      <TouchableOpacity>
+        <Text style={medCatStyles.viewAll}>View All →</Text>
+      </TouchableOpacity>
+    </View>
+    <View style={medCatStyles.grid}>
+      {MEDICINE_CATEGORIES.map((item) => (
+        <TouchableOpacity key={item.id} style={medCatStyles.card} accessibilityRole="button">
+          <View style={medCatStyles.iconWrap}>
+            <Text style={medCatStyles.icon}>{item.icon}</Text>
+          </View>
+          <Text style={medCatStyles.name}>{item.name}</Text>
+          <Text style={medCatStyles.products}>{item.products}+ Products</Text>
+          <Text style={medCatStyles.desc}>{item.desc}</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  </View>
+));
+MedicineCategoriesSection.displayName = 'MedicineCategoriesSection';
+
+const medCatStyles = StyleSheet.create({
+  container: { paddingHorizontal: 16, paddingVertical: 16, backgroundColor: COLORS.background },
+  headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: COLORS.textPrimary },
+  viewAll: { fontSize: 13, color: COLORS.primary, fontWeight: '600' },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
+  card: { width: '31%', backgroundColor: COLORS.white, borderRadius: 12, padding: 12, marginBottom: 12, alignItems: 'center', borderWidth: 1, borderColor: COLORS.border },
+  iconWrap: { width: 48, height: 48, borderRadius: 24, backgroundColor: COLORS.primaryLight, justifyContent: 'center', alignItems: 'center', marginBottom: 8 },
+  icon: { fontSize: 24 },
+  name: { fontSize: 12, fontWeight: '700', color: COLORS.textPrimary, textAlign: 'center' },
+  products: { fontSize: 10, color: COLORS.primary, marginTop: 4 },
+  desc: { fontSize: 8, color: COLORS.textSecondary, textAlign: 'center', marginTop: 2 },
+});
+
+// Popular Medicines
+const POPULAR_MEDICINES = [
+  { id: '1', name: 'Dolo 650', manufacturer: 'Micro Labs', price: 32.40, mrp: 36.00, rating: 4.8, reviews: 45000, icon: 'medical', category: 'Pain Relief' },
+  { id: '2', name: 'Crocin Advance', manufacturer: 'GSK', price: 28.60, mrp: 34.00, rating: 4.7, reviews: 38000, icon: 'fitness', category: 'Pain Relief' },
+  { id: '3', name: 'Azithromycin 500mg', manufacturer: 'Cipla', price: 45.00, mrp: 55.00, rating: 4.6, reviews: 25000, icon: 'medical', category: 'Antibiotics' },
+  { id: '4', name: 'Metformin 500mg', manufacturer: 'Sun Pharma', price: 65.00, mrp: 80.00, rating: 4.7, reviews: 32000, icon: 'fitness', category: 'Diabetes' },
+  { id: '5', name: 'Combiflam', manufacturer: 'GSK', price: 24.00, mrp: 28.00, rating: 4.5, reviews: 28000, icon: 'medical', category: 'Pain Relief' },
+  { id: '6', name: 'Augmentin 625', manufacturer: 'GSK', price: 320.00, mrp: 380.00, rating: 4.8, reviews: 22000, icon: 'medical', category: 'Antibiotics' },
+  { id: '7', name: 'Thyroxine 50mcg', manufacturer: 'Abbott', price: 85.00, mrp: 100.00, rating: 4.6, reviews: 18000, icon: 'fitness', category: 'Thyroid' },
+  { id: '8', name: 'Cetirizine 10mg', manufacturer: 'UCB', price: 35.00, mrp: 45.00, rating: 4.5, reviews: 35000, icon: 'medical', category: 'Allergy' },
+];
+
+const PopularMedicinesSection = React.memo(() => (
+  <View style={popMedsStyles.container}>
+    <Text style={popMedsStyles.sectionTitle}>Popular Medicines</Text>
+    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingRight: 16 }}>
+      {POPULAR_MEDICINES.map((item) => (
+        <TouchableOpacity key={item.id} style={popMedsStyles.card} accessibilityRole="button">
+          <View style={popMedsStyles.badge}>
+            <Text style={popMedsStyles.badgeText}>BESTSELLER</Text>
+          </View>
+          <View style={popMedsStyles.iconWrap}>
+            <Ionicons name={item.icon} size={36} color={COLORS.primary} />
+          </View>
+          <Text style={popMedsStyles.category}>{item.category}</Text>
+          <Text style={popMedsStyles.name} numberOfLines={2}>{item.name}</Text>
+          <Text style={popMedsStyles.manufacturer}>{item.manufacturer}</Text>
+          <View style={popMedsStyles.rating}>
+            <Ionicons name="star" size={12} color="#FFD700" />
+            <Text style={popMedsStyles.ratingText}>{item.rating}</Text>
+            <Text style={popMedsStyles.reviews}>({(item.reviews / 1000).toFixed(0)}k)</Text>
+          </View>
+          <View style={popMedsStyles.priceRow}>
+            <Text style={popMedsStyles.price}>₹{item.price.toFixed(2)}</Text>
+            <Text style={popMedsStyles.mrp}>₹{item.mrp.toFixed(2)}</Text>
+          </View>
+          <TouchableOpacity style={popMedsStyles.addBtn}>
+            <Text style={popMedsStyles.addBtnText}>Add to Cart</Text>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
+  </View>
+));
+PopularMedicinesSection.displayName = 'PopularMedicinesSection';
+
+const popMedsStyles = StyleSheet.create({
+  container: { paddingVertical: 16, backgroundColor: COLORS.background },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: COLORS.textPrimary, paddingHorizontal: 16, marginBottom: 16 },
+  card: { width: 160, backgroundColor: COLORS.white, borderRadius: 14, padding: 14, marginLeft: 16, borderWidth: 1, borderColor: COLORS.border },
+  badge: { position: 'absolute', top: 8, right: 8, backgroundColor: COLORS.success, borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 },
+  badgeText: { color: COLORS.white, fontSize: 8, fontWeight: '700' },
+  iconWrap: { width: 60, height: 60, borderRadius: 30, backgroundColor: COLORS.primaryLight, justifyContent: 'center', alignItems: 'center', marginBottom: 10 },
+  category: { fontSize: 10, color: COLORS.primary, fontWeight: '600', marginBottom: 4 },
+  name: { fontSize: 13, fontWeight: '700', color: COLORS.textPrimary, marginBottom: 2 },
+  manufacturer: { fontSize: 10, color: COLORS.textSecondary, marginBottom: 6 },
+  rating: { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
+  ratingText: { fontSize: 12, fontWeight: '700', color: COLORS.textPrimary, marginLeft: 4 },
+  reviews: { fontSize: 10, color: COLORS.textSecondary, marginLeft: 2 },
+  priceRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
+  price: { fontSize: 16, fontWeight: '700', color: COLORS.textPrimary },
+  mrp: { fontSize: 11, color: COLORS.textSecondary, textDecorationLine: 'line-through', marginLeft: 8 },
+  addBtn: { backgroundColor: COLORS.primary, borderRadius: 8, paddingVertical: 8, alignItems: 'center' },
+  addBtnText: { color: COLORS.white, fontSize: 12, fontWeight: '700' },
+});
+
+// Ayurvedic Medicines
+const AYURVEDIC_PRODUCTS = [
+  { id: '1', name: 'Himalaya Liv.52', category: 'Liver Care', price: 165, mrp: 195, rating: 4.7, icon: 'leaf' },
+  { id: '2', name: 'Baidyanath Chyawanprash', category: 'Immunity', price: 299, mrp: 350, rating: 4.8, icon: 'heart' },
+  { id: '3', name: 'Patanjali Divya Ashvagandha', category: 'Stress Relief', price: 145, mrp: 180, rating: 4.5, icon: 'leaf' },
+  { id: '4', name: 'Dabur Triphala Churna', category: 'Digestion', price: 95, mrp: 120, rating: 4.6, icon: 'nutrition' },
+  { id: '5', name: 'KamaSutra Rasayan', category: 'Vitality', price: 245, mrp: 299, rating: 4.4, icon: 'star' },
+  { id: '6', name: 'Baba Ramdev Yoga', category: 'Fitness', price: 199, mrp: 250, rating: 4.7, icon: 'fitness' },
+];
+
+const AyurvedicSection = React.memo(() => (
+  <View style={ayurStyles.container}>
+    <View style={ayurStyles.header}>
+      <Text style={ayurStyles.title}>Ayurvedic & Natural</Text>
+      <Text style={ayurStyles.subtitle}>Traditional healing for modern life</Text>
+    </View>
+    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingRight: 16 }}>
+      {AYURVEDIC_PRODUCTS.map((item) => (
+        <TouchableOpacity key={item.id} style={ayurStyles.card} accessibilityRole="button">
+          <View style={ayurStyles.iconWrap}>
+            <Ionicons name={item.icon} size={32} color="#2E7D32" />
+          </View>
+          <Text style={ayurStyles.category}>{item.category}</Text>
+          <Text style={ayurStyles.name} numberOfLines={2}>{item.name}</Text>
+          <View style={ayurStyles.rating}>
+            <Ionicons name="star" size={12} color="#FFD700" />
+            <Text style={ayurStyles.ratingText}>{item.rating}</Text>
+          </View>
+          <View style={ayurStyles.priceRow}>
+            <Text style={ayurStyles.price}>₹{item.price}</Text>
+            <Text style={ayurStyles.mrp}>₹{item.mrp}</Text>
+          </View>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
+  </View>
+));
+AyurvedicSection.displayName = 'AyurvedicSection';
+
+const ayurStyles = StyleSheet.create({
+  container: { paddingVertical: 16, backgroundColor: COLORS.white },
+  header: { paddingHorizontal: 16, marginBottom: 16 },
+  title: { fontSize: 18, fontWeight: '700', color: COLORS.textPrimary },
+  subtitle: { fontSize: 12, color: COLORS.textSecondary, marginTop: 2 },
+  card: { width: 140, backgroundColor: '#F1F8E9', borderRadius: 14, padding: 14, marginLeft: 16, borderWidth: 1, borderColor: '#C8E6C9' },
+  iconWrap: { width: 50, height: 50, borderRadius: 25, backgroundColor: COLORS.white, justifyContent: 'center', alignItems: 'center', marginBottom: 10 },
+  category: { fontSize: 10, color: '#2E7D32', fontWeight: '600', marginBottom: 4 },
+  name: { fontSize: 13, fontWeight: '700', color: COLORS.textPrimary, marginBottom: 6 },
+  rating: { flexDirection: 'row', alignItems: 'center', marginBottom: 6 },
+  ratingText: { fontSize: 12, fontWeight: '700', color: COLORS.textPrimary, marginLeft: 4 },
+  priceRow: { flexDirection: 'row', alignItems: 'center' },
+  price: { fontSize: 15, fontWeight: '700', color: COLORS.textPrimary },
+  mrp: { fontSize: 11, color: COLORS.textSecondary, textDecorationLine: 'line-through', marginLeft: 6 },
+});
+
+// Health Supplements
+const SUPPLEMENTS = [
+  { id: '1', name: 'Optimum Nutrition Whey', category: 'Protein', price: 2499, mrp: 3299, rating: 4.8, icon: 'barbell', discount: '24% OFF' },
+  { id: '2', name: 'MuscleBlaze Creatine', category: 'Fitness', price: 699, mrp: 999, rating: 4.6, icon: 'fitness', discount: '30% OFF' },
+  { id: '3', name: 'Vitamin D3 60k', category: 'Vitamins', price: 195, mrp: 250, rating: 4.7, icon: 'sunny', discount: '22% OFF' },
+  { id: '4', name: 'Calcium + Vitamin D', category: 'Bone Health', price: 299, mrp: 399, rating: 4.5, icon: 'body', discount: '25% OFF' },
+  { id: '5', name: 'Omega 3 Fish Oil', category: 'Heart Health', price: 449, mrp: 599, rating: 4.6, icon: 'heart', discount: '25% OFF' },
+  { id: '6', name: 'B-Complex Vitamins', category: 'Energy', price: 249, mrp: 320, rating: 4.4, icon: 'flash', discount: '22% OFF' },
+];
+
+const SupplementsSection = React.memo(() => (
+  <View style={suppStyles.container}>
+    <Text style={suppStyles.sectionTitle}>Health Supplements & Fitness</Text>
+    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingRight: 16 }}>
+      {SUPPLEMENTS.map((item) => (
+        <TouchableOpacity key={item.id} style={suppStyles.card} accessibilityRole="button">
+          <View style={suppStyles.discountBadge}>
+            <Text style={suppStyles.discountText}>{item.discount}</Text>
+          </View>
+          <View style={suppStyles.iconWrap}>
+            <Ionicons name={item.icon} size={32} color={COLORS.accent} />
+          </View>
+          <Text style={suppStyles.category}>{item.category}</Text>
+          <Text style={suppStyles.name} numberOfLines={2}>{item.name}</Text>
+          <View style={suppStyles.rating}>
+            <Ionicons name="star" size={12} color="#FFD700" />
+            <Text style={suppStyles.ratingText}>{item.rating}</Text>
+          </View>
+          <View style={suppStyles.priceRow}>
+            <Text style={suppStyles.price}>₹{item.price}</Text>
+            <Text style={suppStyles.mrp}>₹{item.mrp}</Text>
+          </View>
+          <TouchableOpacity style={suppStyles.addBtn}>
+            <Text style={suppStyles.addBtnText}>Add</Text>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
+  </View>
+));
+SupplementsSection.displayName = 'SupplementsSection';
+
+const suppStyles = StyleSheet.create({
+  container: { paddingVertical: 16, backgroundColor: '#FFF8E1' },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: COLORS.textPrimary, paddingHorizontal: 16, marginBottom: 16 },
+  card: { width: 150, backgroundColor: COLORS.white, borderRadius: 14, padding: 12, marginLeft: 16, borderWidth: 1, borderColor: COLORS.border },
+  discountBadge: { position: 'absolute', top: 8, right: 8, backgroundColor: COLORS.accent, borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 },
+  discountText: { color: COLORS.white, fontSize: 9, fontWeight: '700' },
+  iconWrap: { width: 50, height: 50, borderRadius: 25, backgroundColor: '#FFF3E0', justifyContent: 'center', alignItems: 'center', marginBottom: 8, alignSelf: 'center' },
+  category: { fontSize: 10, color: COLORS.accent, fontWeight: '600', marginBottom: 4, textAlign: 'center' },
+  name: { fontSize: 12, fontWeight: '700', color: COLORS.textPrimary, marginBottom: 6, textAlign: 'center' },
+  rating: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 6 },
+  ratingText: { fontSize: 12, fontWeight: '700', color: COLORS.textPrimary, marginLeft: 4 },
+  priceRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 8 },
+  price: { fontSize: 15, fontWeight: '700', color: COLORS.textPrimary },
+  mrp: { fontSize: 11, color: COLORS.textSecondary, textDecorationLine: 'line-through', marginLeft: 6 },
+  addBtn: { backgroundColor: COLORS.primary, borderRadius: 6, paddingVertical: 6, alignItems: 'center' },
+  addBtnText: { color: COLORS.white, fontSize: 11, fontWeight: '700' },
+});
+
+// Baby Care Products
+const BABY_CARE = [
+  { id: '1', name: 'Huggies Dry Pants', category: 'Diapers', price: 799, mrp: 999, rating: 4.7, icon: 'happy', discount: '20% OFF' },
+  { id: '2', name: 'Johnson\'s Baby Oil', category: 'Skincare', price: 195, mrp: 250, rating: 4.8, icon: 'water', discount: '22% OFF' },
+  { id: '3', name: 'Himalaya Baby Shampoo', category: 'Hair Care', price: 145, mrp: 180, rating: 4.6, icon: 'water', discount: '19% OFF' },
+  { id: '4', name: 'Nestle Lacta', category: 'Formula', price: 450, mrp: 550, rating: 4.5, icon: 'nutrition', discount: '18% OFF' },
+  { id: '5', name: 'Mamypoko Diapers', category: 'Diapers', price: 649, mrp: 799, rating: 4.6, icon: 'happy', discount: '19% OFF' },
+];
+
+const BabyCareSection = React.memo(() => (
+  <View style={babyStyles.container}>
+    <Text style={babyStyles.sectionTitle}>Baby Care Essentials</Text>
+    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingRight: 16 }}>
+      {BABY_CARE.map((item) => (
+        <TouchableOpacity key={item.id} style={babyStyles.card} accessibilityRole="button">
+          <View style={babyStyles.discountBadge}>
+            <Text style={babyStyles.discountText}>{item.discount}</Text>
+          </View>
+          <View style={babyStyles.iconWrap}>
+            <Ionicons name={item.icon} size={32} color="#E91E63" />
+          </View>
+          <Text style={babyStyles.category}>{item.category}</Text>
+          <Text style={babyStyles.name} numberOfLines={2}>{item.name}</Text>
+          <View style={babyStyles.rating}>
+            <Ionicons name="star" size={12} color="#FFD700" />
+            <Text style={babyStyles.ratingText}>{item.rating}</Text>
+          </View>
+          <View style={babyStyles.priceRow}>
+            <Text style={babyStyles.price}>₹{item.price}</Text>
+            <Text style={babyStyles.mrp}>₹{item.mrp}</Text>
+          </View>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
+  </View>
+));
+BabyCareSection.displayName = 'BabyCareSection';
+
+const babyStyles = StyleSheet.create({
+  container: { paddingVertical: 16, backgroundColor: COLORS.white },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: COLORS.textPrimary, paddingHorizontal: 16, marginBottom: 16 },
+  card: { width: 140, backgroundColor: '#FCE4EC', borderRadius: 14, padding: 12, marginLeft: 16, borderWidth: 1, borderColor: '#F8BBD0' },
+  discountBadge: { position: 'absolute', top: 8, right: 8, backgroundColor: COLORS.accent, borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 },
+  discountText: { color: COLORS.white, fontSize: 9, fontWeight: '700' },
+  iconWrap: { width: 50, height: 50, borderRadius: 25, backgroundColor: COLORS.white, justifyContent: 'center', alignItems: 'center', marginBottom: 8, alignSelf: 'center' },
+  category: { fontSize: 10, color: '#E91E63', fontWeight: '600', marginBottom: 4, textAlign: 'center' },
+  name: { fontSize: 12, fontWeight: '700', color: COLORS.textPrimary, marginBottom: 6, textAlign: 'center' },
+  rating: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 6 },
+  ratingText: { fontSize: 12, fontWeight: '700', color: COLORS.textPrimary, marginLeft: 4 },
+  priceRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
+  price: { fontSize: 15, fontWeight: '700', color: COLORS.textPrimary },
+  mrp: { fontSize: 11, color: COLORS.textSecondary, textDecorationLine: 'line-through', marginLeft: 6 },
+});
+
+// Personal Care
+const PERSONAL_CARE = [
+  { id: '1', name: 'Colgate Toothpaste', category: 'Dental', price: 149, mrp: 180, rating: 4.7, icon: 'happy' },
+  { id: '2', name: 'Dove Soap Bar', category: 'Body Care', price: 45, mrp: 55, rating: 4.6, icon: 'water' },
+  { id: '3', name: 'Head & Shoulders', category: 'Hair Care', price: 199, mrp: 250, rating: 4.5, icon: 'cut' },
+  { id: '4', name: 'Lifebuoy Handwash', category: 'Hygiene', price: 89, mrp: 110, rating: 4.4, icon: 'water' },
+  { id: '5', name: 'Fair & Lovely', category: 'Skincare', price: 245, mrp: 299, rating: 4.3, icon: 'sunny' },
+];
+
+const PersonalCareSection = React.memo(() => (
+  <View style={pcStyles.container}>
+    <Text style={pcStyles.sectionTitle}>Personal Care</Text>
+    <View style={pcStyles.grid}>
+      {PERSONAL_CARE.map((item) => (
+        <TouchableOpacity key={item.id} style={pcStyles.card} accessibilityRole="button">
+          <View style={pcStyles.iconWrap}>
+            <Ionicons name={item.icon} size={28} color={COLORS.primary} />
+          </View>
+          <Text style={pcStyles.name} numberOfLines={2}>{item.name}</Text>
+          <Text style={pcStyles.category}>{item.category}</Text>
+          <View style={pcStyles.priceRow}>
+            <Text style={pcStyles.price}>₹{item.price}</Text>
+            <Text style={pcStyles.mrp}>₹{item.mrp}</Text>
+          </View>
+        </TouchableOpacity>
+      ))}
+    </View>
+  </View>
+));
+PersonalCareSection.displayName = 'PersonalCareSection';
+
+const pcStyles = StyleSheet.create({
+  container: { paddingHorizontal: 16, paddingVertical: 16, backgroundColor: COLORS.background },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: COLORS.textPrimary, marginBottom: 16 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
+  card: { width: '31%', backgroundColor: COLORS.white, borderRadius: 12, padding: 12, marginBottom: 12, alignItems: 'center', borderWidth: 1, borderColor: COLORS.border },
+  iconWrap: { width: 44, height: 44, borderRadius: 22, backgroundColor: COLORS.primaryLight, justifyContent: 'center', alignItems: 'center', marginBottom: 8 },
+  name: { fontSize: 11, fontWeight: '700', color: COLORS.textPrimary, textAlign: 'center', marginBottom: 2 },
+  category: { fontSize: 9, color: COLORS.textSecondary, marginBottom: 6 },
+  priceRow: { flexDirection: 'row', alignItems: 'center' },
+  price: { fontSize: 13, fontWeight: '700', color: COLORS.textPrimary },
+  mrp: { fontSize: 10, color: COLORS.textSecondary, textDecorationLine: 'line-through', marginLeft: 4 },
+});
+
+// Medical Devices
+const MEDICAL_DEVICES = [
+  { id: '1', name: 'Omron BP Monitor', type: 'Blood Pressure', price: 2499, mrp: 3299, rating: 4.8, icon: 'heart', discount: '24% OFF' },
+  { id: '2', name: 'Accu-Chek Glucometer', type: 'Diabetes', price: 599, mrp: 799, rating: 4.7, icon: 'water', discount: '25% OFF' },
+  { id: '3', name: 'Dr. Morepen Pulse Oximeter', type: 'Oxygen', price: 399, mrp: 599, rating: 4.5, icon: 'pulse', discount: '33% OFF' },
+  { id: '4', name: 'Dr. Trust Thermometer', type: 'Temperature', price: 349, mrp: 499, rating: 4.6, icon: 'thermometer', discount: '30% OFF' },
+  { id: '5', name: 'Nebulizer Machine', type: 'Respiratory', price: 1299, mrp: 1699, rating: 4.4, icon: 'air', discount: '24% OFF' },
+];
+
+const MedicalDevicesSection = React.memo(() => (
+  <View style={medDevStyles.container}>
+    <Text style={medDevStyles.sectionTitle}>Medical Devices & Equipment</Text>
+    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingRight: 16 }}>
+      {MEDICAL_DEVICES.map((item) => (
+        <TouchableOpacity key={item.id} style={medDevStyles.card} accessibilityRole="button">
+          <View style={medDevStyles.discountBadge}>
+            <Text style={medDevStyles.discountText}>{item.discount}</Text>
+          </View>
+          <View style={medDevStyles.iconWrap}>
+            <Ionicons name={item.icon} size={32} color={COLORS.blue} />
+          </View>
+          <Text style={medDevStyles.type}>{item.type}</Text>
+          <Text style={medDevStyles.name} numberOfLines={2}>{item.name}</Text>
+          <View style={medDevStyles.rating}>
+            <Ionicons name="star" size={12} color="#FFD700" />
+            <Text style={medDevStyles.ratingText}>{item.rating}</Text>
+          </View>
+          <View style={medDevStyles.priceRow}>
+            <Text style={medDevStyles.price}>₹{item.price}</Text>
+            <Text style={medDevStyles.mrp}>₹{item.mrp}</Text>
+          </View>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
+  </View>
+));
+MedicalDevicesSection.displayName = 'MedicalDevicesSection';
+
+const medDevStyles = StyleSheet.create({
+  container: { paddingVertical: 16, backgroundColor: COLORS.white },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: COLORS.textPrimary, paddingHorizontal: 16, marginBottom: 16 },
+  card: { width: 150, backgroundColor: '#E3F2FD', borderRadius: 14, padding: 12, marginLeft: 16, borderWidth: 1, borderColor: '#BBDEFB' },
+  discountBadge: { position: 'absolute', top: 8, right: 8, backgroundColor: COLORS.accent, borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 },
+  discountText: { color: COLORS.white, fontSize: 9, fontWeight: '700' },
+  iconWrap: { width: 50, height: 50, borderRadius: 25, backgroundColor: COLORS.white, justifyContent: 'center', alignItems: 'center', marginBottom: 8, alignSelf: 'center' },
+  type: { fontSize: 10, color: COLORS.blue, fontWeight: '600', marginBottom: 4, textAlign: 'center' },
+  name: { fontSize: 12, fontWeight: '700', color: COLORS.textPrimary, marginBottom: 6, textAlign: 'center' },
+  rating: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 6 },
+  ratingText: { fontSize: 12, fontWeight: '700', color: COLORS.textPrimary, marginLeft: 4 },
+  priceRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
+  price: { fontSize: 15, fontWeight: '700', color: COLORS.textPrimary },
+  mrp: { fontSize: 11, color: COLORS.textSecondary, textDecorationLine: 'line-through', marginLeft: 6 },
+});
+
+// Sexual Wellness
+const SEXUAL_WELLNESS = [
+  { id: '1', name: 'Durex Condoms', category: 'Contraception', price: 199, mrp: 250, rating: 4.7, icon: 'shield', discount: '20% OFF' },
+  { id: '2', name: 'Manforce Condoms', category: 'Contraception', price: 149, mrp: 180, rating: 4.6, icon: 'shield', discount: '17% OFF' },
+  { id: '3', name: 'Dabur Shilajit', category: 'Vitality', price: 399, mrp: 499, rating: 4.5, icon: 'flame', discount: '20% OFF' },
+  { id: '4', name: 'Ayurvedic Power', category: 'Energy', price: 299, mrp: 399, rating: 4.4, icon: 'flash', discount: '25% OFF' },
+];
+
+const SexualWellnessSection = React.memo(() => (
+  <View style={swStyles.container}>
+    <Text style={swStyles.sectionTitle}>Sexual Wellness</Text>
+    <View style={swStyles.grid}>
+      {SEXUAL_WELLNESS.map((item) => (
+        <TouchableOpacity key={item.id} style={swStyles.card} accessibilityRole="button">
+          <View style={swStyles.discountBadge}>
+            <Text style={swStyles.discountText}>{item.discount}</Text>
+          </View>
+          <View style={swStyles.iconWrap}>
+            <Ionicons name={item.icon} size={28} color="#9C27B0" />
+          </View>
+          <Text style={swStyles.name} numberOfLines={2}>{item.name}</Text>
+          <Text style={swStyles.category}>{item.category}</Text>
+          <View style={swStyles.priceRow}>
+            <Text style={swStyles.price}>₹{item.price}</Text>
+            <Text style={swStyles.mrp}>₹{item.mrp}</Text>
+          </View>
+        </TouchableOpacity>
+      ))}
+    </View>
+  </View>
+));
+SexualWellnessSection.displayName = 'SexualWellnessSection';
+
+const swStyles = StyleSheet.create({
+  container: { paddingHorizontal: 16, paddingVertical: 16, backgroundColor: '#F3E5F5' },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: COLORS.textPrimary, marginBottom: 16 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
+  card: { width: '48%', backgroundColor: COLORS.white, borderRadius: 12, padding: 12, marginBottom: 12, alignItems: 'center', borderWidth: 1, borderColor: '#E1BEE7' },
+  discountBadge: { position: 'absolute', top: 8, right: 8, backgroundColor: COLORS.accent, borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 },
+  discountText: { color: COLORS.white, fontSize: 9, fontWeight: '700' },
+  iconWrap: { width: 44, height: 44, borderRadius: 22, backgroundColor: '#F3E5F5', justifyContent: 'center', alignItems: 'center', marginBottom: 8 },
+  name: { fontSize: 12, fontWeight: '700', color: COLORS.textPrimary, textAlign: 'center', marginBottom: 2 },
+  category: { fontSize: 10, color: '#9C27B0', marginBottom: 6 },
+  priceRow: { flexDirection: 'row', alignItems: 'center' },
+  price: { fontSize: 14, fontWeight: '700', color: COLORS.textPrimary },
+  mrp: { fontSize: 11, color: COLORS.textSecondary, textDecorationLine: 'line-through', marginLeft: 6 },
+});
+
+// ============================================================================
+// PAGE 3: BRANDS & DEALS - Top Brands and Special Deals
+// ============================================================================
+
+// Top Brands
+const TOP_BRANDS = [
+  { id: '1', name: 'Cipla', products: 500, logo: '💊', color: '#1565C0' },
+  { id: '2', name: 'Sun Pharma', products: 450, logo: '☀️', color: '#F57C00' },
+  { id: '3', name: 'Dr. Reddy\'s', products: 400, logo: '🔴', color: '#C62828' },
+  { id: '4', name: 'Himalaya', products: 350, logo: '🌿', color: '#2E7D32' },
+  { id: '5', name: 'Mankind', products: 380, logo: '👥', color: '#7B1FA2' },
+  { id: '6', name: 'Abbott', products: 320, logo: '🟢', color: '#00897B' },
+  { id: '7', name: 'GSK', products: 280, logo: '🔵', color: '#1976D2' },
+  { id: '8', name: 'Lupin', products: 260, logo: '💉', color: '#5E35B1' },
+];
+
+const TopBrandsSection = React.memo(() => (
+  <View style={brandStyles.container}>
+    <Text style={brandStyles.sectionTitle}>Top Pharmaceutical Brands</Text>
+    <View style={brandStyles.grid}>
+      {TOP_BRANDS.map((item) => (
+        <TouchableOpacity key={item.id} style={brandStyles.card} accessibilityRole="button">
+          <View style={[brandStyles.logoWrap, { backgroundColor: item.color + '20' }]}>
+            <Text style={brandStyles.logo}>{item.logo}</Text>
+          </View>
+          <Text style={brandStyles.name}>{item.name}</Text>
+          <Text style={brandStyles.products}>{item.products}+ Products</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  </View>
+));
+TopBrandsSection.displayName = 'TopBrandsSection';
+
+const brandStyles = StyleSheet.create({
+  container: { paddingHorizontal: 16, paddingVertical: 16, backgroundColor: COLORS.white },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: COLORS.textPrimary, marginBottom: 16 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
+  card: { width: '23%', alignItems: 'center', marginBottom: 16 },
+  logoWrap: { width: 56, height: 56, borderRadius: 28, justifyContent: 'center', alignItems: 'center', marginBottom: 8 },
+  logo: { fontSize: 24 },
+  name: { fontSize: 12, fontWeight: '700', color: COLORS.textPrimary, textAlign: 'center' },
+  products: { fontSize: 10, color: COLORS.textSecondary, marginTop: 2 },
+});
+
+// Special Deals
+const SPECIAL_DEALS = [
+  { id: '1', title: 'Flat 25% Off', subtitle: 'On all Ayurvedic products', icon: '🌿', color: '#2E7D32', valid: 'Valid till 31st March' },
+  { id: '2', title: 'Buy 1 Get 1 Free', subtitle: 'On select Vitamins', icon: '💊', color: '#F57C00', valid: 'Limited time offer' },
+  { id: '3', title: 'Free Delivery', subtitle: 'On orders above ₹499', icon: '🚚', color: '#1565C0', valid: 'No code required' },
+  { id: '4', title: '₹200 Off', subtitle: 'First order discount', icon: '🎁', color: '#7B1FA2', valid: 'Use code NEW20' },
+];
+
+const SpecialDealsSection = React.memo(() => (
+  <View style={dealStyles.container}>
+    <Text style={dealStyles.sectionTitle}>Special Offers & Deals</Text>
+    <View style={dealStyles.grid}>
+      {SPECIAL_DEALS.map((item) => (
+        <TouchableOpacity key={item.id} style={[dealStyles.card, { backgroundColor: item.color }]} accessibilityRole="button">
+          <Text style={dealStyles.icon}>{item.icon}</Text>
+          <Text style={dealStyles.title}>{item.title}</Text>
+          <Text style={dealStyles.subtitle}>{item.subtitle}</Text>
+          <Text style={dealStyles.valid}>{item.valid}</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  </View>
+));
+SpecialDealsSection.displayName = 'SpecialDealsSection';
+
+const dealStyles = StyleSheet.create({
+  container: { paddingHorizontal: 16, paddingVertical: 16, backgroundColor: COLORS.background },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: COLORS.textPrimary, marginBottom: 16 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
+  card: { width: '48%', borderRadius: 14, padding: 16, marginBottom: 12 },
+  icon: { fontSize: 28, marginBottom: 8 },
+  title: { fontSize: 15, fontWeight: '700', color: COLORS.white, marginBottom: 4 },
+  subtitle: { fontSize: 12, color: 'rgba(255,255,255,0.9)', marginBottom: 6 },
+  valid: { fontSize: 10, color: 'rgba(255,255,255,0.7)' },
+});
+
+// Medicine by Health Concern
+const HEALTH_CONCERNS_EXTENDED = [
+  { id: '1', name: 'Fever & Pain', icon: '🌡️', color: '#FFEBEE', medicines: ['Dolo 650', 'Crocin', 'Combiflam'] },
+  { id: '2', name: 'Cough & Cold', icon: '😷', color: '#E3F2FD', medicines: ['Alex', 'Cough Syrup', 'Benadryl'] },
+  { id: '3', name: 'Stomach Issues', icon: '🫃', color: '#E8F5E9', medicines: ['Omez', 'Digene', 'Eno'] },
+  { id: '4', name: 'Allergies', icon: '🤧', color: '#FFF3E0', medicines: ['Cetirizine', 'Loratadine', 'Allegra'] },
+  { id: '5', name: 'Skin Problems', icon: '✨', color: '#F3E5F5', medicines: ['Mometasone', 'Siloderm', 'Moisturex'] },
+  { id: '6', name: 'Bone & Joint', icon: '🦴', color: '#FCE4EC', medicines: ['Painkiller Gel', 'Calcium', 'Joint Care'] },
+];
+
+const HealthConcernsExtendedSection = React.memo(() => (
+  <View style={hcStyles.container}>
+    <Text style={hcStyles.sectionTitle}>Medicines by Health Concern</Text>
+    {HEALTH_CONCERNS_EXTENDED.map((item) => (
+      <TouchableOpacity key={item.id} style={hcStyles.card} accessibilityRole="button">
+        <View style={[hcStyles.iconWrap, { backgroundColor: item.color }]}>
+          <Text style={hcStyles.icon}>{item.icon}</Text>
+        </View>
+        <View style={hcStyles.content}>
+          <Text style={hcStyles.name}>{item.name}</Text>
+          <Text style={hcStyles.medicines}>{item.medicines.join(', ')}</Text>
+        </View>
+        <Ionicons name="chevron-forward" size={20} color={COLORS.textSecondary} />
+      </TouchableOpacity>
+    ))}
+  </View>
+));
+HealthConcernsExtendedSection.displayName = 'HealthConcernsExtendedSection';
+
+const hcStyles = StyleSheet.create({
+  container: { paddingHorizontal: 16, paddingVertical: 16, backgroundColor: COLORS.white },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: COLORS.textPrimary, marginBottom: 16 },
+  card: { flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.background, borderRadius: 12, padding: 14, marginBottom: 10 },
+  iconWrap: { width: 48, height: 48, borderRadius: 24, justifyContent: 'center', alignItems: 'center', marginRight: 12 },
+  icon: { fontSize: 24 },
+  content: { flex: 1 },
+  name: { fontSize: 14, fontWeight: '700', color: COLORS.textPrimary, marginBottom: 2 },
+  medicines: { fontSize: 11, color: COLORS.textSecondary },
+});
+
+// Frequently Asked Questions
+const PHARMACY_FAQS = [
+  { id: '1', q: 'How do I order medicines online?', a: 'Simply search for your medicine, add to cart, and checkout. Our delivery partner will deliver to your doorstep.' },
+  { id: '2', q: 'Are the medicines genuine?', a: 'Yes, we only source medicines from authorized distributors and guarantee 100% genuine products.' },
+  { id: '3', q: 'How long does delivery take?', a: 'Express delivery within 2-4 hours. Standard delivery within 24-48 hours.' },
+  { id: '4', q: 'Can I get a prescription verified?', a: 'Yes, upload your prescription and our pharmacists will verify and process your order.' },
+  { id: '5', q: 'What is the return policy?', a: 'We offer easy returns for damaged or expired products. Contact support within 7 days.' },
+];
+
+const PharmacyFAQsSection = React.memo(() => {
+  const [expanded, setExpanded] = useState({});
+  return (
+    <View style={faqStyles.container}>
+      <Text style={faqStyles.sectionTitle}>Frequently Asked Questions</Text>
+      {PHARMACY_FAQS.map((item) => (
+        <View key={item.id} style={faqStyles.item}>
+          <TouchableOpacity style={faqStyles.questionRow} onPress={() => setExpanded(prev => ({ ...prev, [item.id]: !prev[item.id] }))}>
+            <Text style={faqStyles.question}>{item.q}</Text>
+            <Ionicons name={expanded[item.id] ? 'remove' : 'add'} size={20} color={COLORS.primary} />
+          </TouchableOpacity>
+          {expanded[item.id] && <Text style={faqStyles.answer}>{item.a}</Text>}
+        </View>
+      ))}
+    </View>
+  );
+});
+PharmacyFAQsSection.displayName = 'PharmacyFAQsSection';
+
+const faqStyles = StyleSheet.create({
+  container: { paddingHorizontal: 16, paddingVertical: 16, backgroundColor: COLORS.background },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: COLORS.textPrimary, marginBottom: 16 },
+  item: { backgroundColor: COLORS.white, borderRadius: 10, marginBottom: 10, overflow: 'hidden' },
+  questionRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 14 },
+  question: { flex: 1, fontSize: 13, fontWeight: '600', color: COLORS.textPrimary, marginRight: 10 },
+  answer: { fontSize: 12, color: COLORS.textSecondary, lineHeight: 18, paddingHorizontal: 14, paddingBottom: 14 },
+});
+
+// App Download Banner
+const AppDownloadBanner = React.memo(() => (
+  <View style={appBannerStyles.container}>
+    <View style={appBannerStyles.content}>
+      <Text style={appBannerStyles.title}>Download Our App</Text>
+      <Text style={appBannerStyles.subtitle}>Get 20% off on first medicine order</Text>
+      <View style={appBannerStyles.buttons}>
+        <TouchableOpacity style={appBannerStyles.btn}>
+          <Text style={appBannerStyles.btnIcon}>▶️</Text>
+          <View><Text style={appBannerStyles.btnSmall}>Get it on</Text><Text style={appBannerStyles.btnBig}>Google Play</Text></View>
+        </TouchableOpacity>
+        <TouchableOpacity style={appBannerStyles.btn}>
+          <Text style={appBannerStyles.btnIcon}>🍎</Text>
+          <View><Text style={appBannerStyles.btnSmall}>Download on the</Text><Text style={appBannerStyles.btnBig}>App Store</Text></View>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </View>
+));
+AppDownloadBanner.displayName = 'AppDownloadBanner';
+
+const appBannerStyles = StyleSheet.create({
+  container: { marginHorizontal: 16, marginVertical: 16, backgroundColor: COLORS.primary, borderRadius: 16, padding: 20 },
+  content: { alignItems: 'center' },
+  title: { fontSize: 22, fontWeight: '700', color: COLORS.white, marginBottom: 6 },
+  subtitle: { fontSize: 14, color: 'rgba(255,255,255,0.9)', marginBottom: 16 },
+  buttons: { flexDirection: 'row', gap: 12 },
+  btn: { flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.white, borderRadius: 10, paddingVertical: 10, paddingHorizontal: 16 },
+  btnIcon: { fontSize: 24, marginRight: 8 },
+  btnSmall: { fontSize: 10, color: COLORS.textSecondary },
+  btnBig: { fontSize: 14, fontWeight: '700', color: COLORS.textPrimary },
+});
+
+// Trust Badges
+const TrustBadgesPharmacy = React.memo(() => (
+  <View style={trustStyles.container}>
+    <View style={trustStyles.badge}><Text style={trustStyles.badgeIcon}>🛡️</Text><Text style={trustStyles.badgeTitle}>100% Genuine</Text><Text style={trustStyles.badgeDesc}> medicines</Text></View>
+    <View style={trustStyles.badge}><Text style={trustStyles.badgeIcon}>🚚</Text><Text style={trustStyles.badgeTitle}>Free Delivery</Text><Text style={trustStyles.badgeDesc}>Above ₹499</Text></View>
+    <View style={trustStyles.badge}><Text style={trustStyles.badgeIcon}>⚕️</Text><Text style={trustStyles.badgeTitle}>Expert</Text><Text style={trustStyles.badgeDesc}>Pharmacists</Text></View>
+    <View style={trustStyles.badge}><Text style={trustStyles.badgeIcon}>💰</Text><Text style={trustStyles.badgeTitle}>Easy</Text><Text style={trustStyles.badgeDesc}>Returns</Text></View>
+  </View>
+));
+TrustBadgesPharmacy.displayName = 'TrustBadgesPharmacy';
+
+const trustStyles = StyleSheet.create({
+  container: { flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 20, paddingHorizontal: 16, backgroundColor: COLORS.white },
+  badge: { alignItems: 'center' },
+  badgeIcon: { fontSize: 28, marginBottom: 6 },
+  badgeTitle: { fontSize: 12, fontWeight: '700', color: COLORS.textPrimary },
+  badgeDesc: { fontSize: 9, color: COLORS.textSecondary, marginTop: 2 },
+});
+
+// ============================================================================
 // MAIN COMPONENT
 // ============================================================================
 export default function PharmacyIndex() {
@@ -474,6 +1122,9 @@ export default function PharmacyIndex() {
         <ValueDealsSection />
         <PharmaciesNearSection />
         <LiveHealthyFooter />
+        <PharmacyFAQsSection />
+        <AppDownloadBanner />
+        <TrustBadgesPharmacy />
       </AScrollView>
     </SafeAreaView>
   );
