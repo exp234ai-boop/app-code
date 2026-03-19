@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { DoctorsTheme, ONLINE_SPECIALITIES, ONLINE_SYMPTOMS } from '../components/doctors/DoctorsTheme';
 import SearchBarAnimated from '../components/doctors/SearchBarAnimated';
 import SpecialityGrid from '../components/doctors/SpecialityGrid';
 import FloatingAskApollo from '../components/doctors/FloatingAskApollo';
@@ -290,6 +289,7 @@ const promoStyles = StyleSheet.create({
 
 // Main Online Consult Screen
 export default function OnlineConsultation() {
+  const router = useRouter();
   const scrollRef = useRef(null);
   const [showGoToTop, setShowGoToTop] = useState(false);
 
@@ -301,6 +301,26 @@ export default function OnlineConsultation() {
   const scrollToTop = useCallback(() => {
     scrollRef.current?.scrollTo({ y: 0, animated: true });
   }, []);
+
+  const handleSpecialityPress = useCallback((speciality) => {
+    const screenMap = {
+      'cardio': '/doctors/specialty/cardiology',
+      'derma': '/doctors/specialty/dermatology',
+      'gp': '/doctors/specialty/generalpractitioner',
+      'women': '/doctors/specialty/womenshealth',
+      'psych': '/doctors/specialty/psychiatry',
+      'ortho': '/doctors/specialty/orthopaedics',
+      'ent': '/doctors/specialty/generalpractitioner',
+      'uro': '/doctors/specialty/cardiology',
+      'paed': '/doctors/specialty/generalpractitioner',
+      'digest': '/doctors/specialty/generalpractitioner',
+      'neuro': '/doctors/specialty/psychiatry',
+      'diab': '/doctors/specialty/generalpractitioner',
+      'thyroid': '/doctors/specialty/womenshealth',
+    };
+    const route = screenMap[speciality.id] || '/doctors/specialty/generalpractitioner';
+    router.push(route);
+  }, [router]);
 
   return (
     <View style={styles.container}>
@@ -323,6 +343,7 @@ export default function OnlineConsultation() {
           title="Find Doctor for Online Consult by Speciality"
           showViewAll
           columns={4}
+          onItemPress={handleSpecialityPress}
         />
 
         <OnlineSymptomsGrid />

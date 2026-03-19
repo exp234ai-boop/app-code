@@ -7,6 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { DoctorsTheme, ONTIME_SPECIALITIES } from '../components/doctors/DoctorsTheme';
 import StickyHeader from '../components/doctors/StickyHeader';
 import SearchBarAnimated from '../components/doctors/SearchBarAnimated';
@@ -138,6 +139,7 @@ const callStyles = StyleSheet.create({
 
 // Main On-Time Screen
 export default function Ontime() {
+  const router = useRouter();
   const scrollRef = useRef(null);
   const [showGoToTop, setShowGoToTop] = useState(false);
 
@@ -149,6 +151,22 @@ export default function Ontime() {
   const scrollToTop = useCallback(() => {
     scrollRef.current?.scrollTo({ y: 0, animated: true });
   }, []);
+
+  const handleSpecialityPress = useCallback((speciality) => {
+    const screenMap = {
+      'gp': '/doctors/specialty/generalpractitioner',
+      'obstetrics': '/doctors/specialty/womenshealth',
+      'psych': '/doctors/specialty/psychiatry',
+      'ent': '/doctors/specialty/generalpractitioner',
+      'paed': '/doctors/specialty/generalpractitioner',
+      'derma': '/doctors/specialty/dermatology',
+      'uro': '/doctors/specialty/cardiology',
+      'gastro': '/doctors/specialty/generalpractitioner',
+      'diet': '/doctors/specialty/generalpractitioner',
+    };
+    const route = screenMap[speciality.id] || '/doctors/specialty/generalpractitioner';
+    router.push(route);
+  }, [router]);
 
   return (
     <View style={styles.container}>
@@ -173,6 +191,7 @@ export default function Ontime() {
           title="Find Doctor for On-Time Guarantee"
           columns={4}
           size="large"
+          onItemPress={handleSpecialityPress}
         />
 
         <CallToBookBanner />
