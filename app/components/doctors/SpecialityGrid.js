@@ -2,11 +2,12 @@ import React, { memo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { DoctorsTheme } from './DoctorsTheme';
 
-const SpecialityItem = memo(({ item, size }) => {
+const SpecialityItem = memo(({ item, size, onPress }) => {
   const itemSize = size === 'large' ? 72 : 56;
   return (
     <TouchableOpacity
       style={styles.item}
+      onPress={() => onPress && onPress(item)}
       accessibilityRole="button"
       accessibilityLabel={`Select ${item.name.replace('\n', ' ')} speciality`}
     >
@@ -20,7 +21,7 @@ const SpecialityItem = memo(({ item, size }) => {
 
 SpecialityItem.displayName = 'SpecialityItem';
 
-const SpecialityGrid = memo(({ data, columns = 4, title, showViewAll, size = 'normal', onViewAll }) => {
+const SpecialityGrid = memo(({ data, columns = 4, title, showViewAll, size = 'normal', onViewAll, onItemPress }) => {
   const rows = [];
   for (let i = 0; i < data.length; i += columns) {
     rows.push(data.slice(i, i + columns));
@@ -41,7 +42,7 @@ const SpecialityGrid = memo(({ data, columns = 4, title, showViewAll, size = 'no
       {rows.map((row, rowIndex) => (
         <View key={rowIndex} style={styles.row}>
           {row.map((item) => (
-            <SpecialityItem key={item.id} item={item} size={size} />
+            <SpecialityItem key={item.id} item={item} size={size} onPress={onItemPress} />
           ))}
           {row.length < columns && Array.from({ length: columns - row.length }).map((_, i) => (
             <View key={`empty-${i}`} style={styles.item} />

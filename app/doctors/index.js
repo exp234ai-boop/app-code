@@ -9,6 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { DoctorsTheme, SPECIALITIES, SYMPTOMS, TESTS_DATA, LIFESTYLE_CONDITIONS, EXPLORE_OFFERINGS } from '../components/doctors/DoctorsTheme';
 import StickyHeader from '../components/doctors/StickyHeader';
 import SearchBarAnimated from '../components/doctors/SearchBarAnimated';
@@ -2019,6 +2020,7 @@ const appDownloadStyles = StyleSheet.create({
 
 // Main Doctors Index Screen
 export default function DoctorsIndex() {
+  const router = useRouter();
   const scrollRef = useRef(null);
   const [showGoToTop, setShowGoToTop] = useState(false);
 
@@ -2030,6 +2032,13 @@ export default function DoctorsIndex() {
   const scrollToTop = useCallback(() => {
     scrollRef.current?.scrollTo({ y: 0, animated: true });
   }, []);
+
+  const handleSpecialityPress = useCallback((speciality) => {
+    router.push({
+      pathname: '/doctors/speciality',
+      params: { id: speciality.id, name: speciality.name }
+    });
+  }, [router]);
 
   return (
     <View style={styles.container}>
@@ -2047,7 +2056,13 @@ export default function DoctorsIndex() {
         <ServicesRow />
         <FamilyCareBanner />
         <InstantDoctorBanner />
-        <SpecialityGrid data={SPECIALITIES} title="Find Doctor by Speciality" showViewAll columns={4} />
+        <SpecialityGrid 
+          data={SPECIALITIES} 
+          title="Find Doctor by Speciality" 
+          showViewAll 
+          columns={4} 
+          onItemPress={handleSpecialityPress}
+        />
         <HeroBanner />
         <SpotlightBanner />
         <AskApolloWidget />
