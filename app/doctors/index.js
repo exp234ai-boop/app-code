@@ -2034,10 +2034,24 @@ export default function DoctorsIndex() {
   }, []);
 
   const handleSpecialityPress = useCallback((speciality) => {
-    router.push({
-      pathname: '/doctors/speciality',
-      params: { id: speciality.id, name: speciality.name }
-    });
+    // Navigate to appropriate specialty screen based on id
+    const screenMap = {
+      'cardio': '/doctors/specialty/cardiology',
+      'derma': '/doctors/specialty/dermatology',
+      'gp': '/doctors/specialty/generalpractitioner',
+      'women': '/doctors/specialty/womenshealth',
+      'psych': '/doctors/specialty/psychiatry',
+      'ortho': '/doctors/specialty/orthopaedics',
+      'ent': '/doctors/specialty/generalpractitioner',
+      'uro': '/doctors/specialty/cardiology',
+      'paed': '/doctors/specialty/generalpractitioner',
+      'digest': '/doctors/specialty/generalpractitioner',
+      'neuro': '/doctors/specialty/psychiatry',
+      'diab': '/doctors/specialty/generalpractitioner',
+      'thyroid': '/doctors/specialty/womenshealth',
+    };
+    const route = screenMap[speciality.id] || '/doctors/specialty/generalpractitioner';
+    router.push(route);
   }, [router]);
 
   return (
